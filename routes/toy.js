@@ -59,17 +59,17 @@ router.get('/subject/:subName', async (req, res) => {
 });
 
 
-router.post("/add", async (req, res) => {
+router.post("/add", authToken ,async (req, res) => {
 
-  let validBody = validStudent(req.body);
+  let validBody = validToy(req.body);
   if (validBody.error) {
     return res.status(400).json(validBody.error.details);
   }
   
   try{
 
-    let student = new ToyModel(req.body);
-    await student.save();
+    let toy = new ToyModel(req.body);
+    await toy.save();
     res.status(201).json(toy);
 
   }
@@ -79,7 +79,7 @@ router.post("/add", async (req, res) => {
   }
 })
 
-router.put("/edit/:idEdit", async(req,res) => {
+router.put("/edit/:idEdit",authToken, async(req,res) => {
   let idEdit = req.params.idEdit
   let validBody = validToy(req.body);
   if (validBody.error) {
@@ -96,7 +96,7 @@ router.put("/edit/:idEdit", async(req,res) => {
 })
 
 
-router.delete("/del/:idDel",async(req,res) => {
+router.delete("/del/:idDel",authToken ,async(req,res) => {
   let idDel = req.params.idDel;
   try{
     let delData = await ToyModel.deleteOne({_id:idDel});
