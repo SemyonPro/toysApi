@@ -6,23 +6,23 @@ const { authToken } = require('../middlewares/auth');
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/', async(req, res) => {
-  let perPage=(req.query.perPage)? Number(req.query.perPage):5;
-  let page=req.query.page;
-  let sortQ=req.query.sort;
-  let ifReverse=(req.query.reverse=="yes")? -1:1;
-  try {
-    let data=await UserModel.find({},{password:0})
-    .sort({[sortQ]: ifReverse}) 
-    .limit(perPage)
-    .skip(page*perPage)
-    res.json(data);
-  }
-  catch(err){
-    console.log(err);
-    res.status(400).json({err:"there is a problem, try again later!"})
-  }
-});
+// router.get('/', async(req, res) => {
+//   let perPage=(req.query.perPage)? Number(req.query.perPage):5;
+//   let page=req.query.page;
+//   let sortQ=req.query.sort;
+//   let ifReverse=(req.query.reverse=="yes")? -1:1;
+//   try {
+//     let data=await UserModel.find({},{password:0})
+//     .sort({[sortQ]: ifReverse}) 
+//     .limit(perPage)
+//     .skip(page*perPage)
+//     res.json(data);
+//   }
+//   catch(err){
+//     console.log(err);
+//     res.status(400).json({err:"there is a problem, try again later!"})
+//   }
+// });
 
 router.get("/myInfo",authToken ,async(req,res) => {
   try{
